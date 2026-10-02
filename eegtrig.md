@@ -4,17 +4,16 @@
 This document describes a hardware device for interfacing an audio signal to an EEG acquisition system for the purpose of capturing audio trigger data alongside EEG data. Whilst the device targets a [BioSemi](https://www.biosemi.com) EEG system, its principle of operation is applicable to systems from other vendors.
 
 ## Introduction
-Trigger data are generally required in experimental EEG acquisition, to associate the EEG data with stimulus and/or response events. Typically, this function is performed by interfacing the computer that is delivering stimulus and/or capturing responses to the EEG acquisition system. For example, the [BioSemi Trigger Cable](https://www.biosemi.com/faq/USB%20Trigger%20interface%20cable.htm) connects a [BioSemi Receiver](https://www.biosemi.com/receiver.htm) to a computer via USB.
+Trigger data are generally required in experimental EEG acquisition, to associate the EEG data with stimulus and/or response events. Typically, this function is performed by interfacing the computer that is delivering stimulus and/or capturing responses to the EEG acquisition system. For example, the [BioSemi Trigger Cable](https://www.biosemi.com/faq/USB%20Trigger%20interface%20cable.htm) connects a [BioSemi Receiver](https://www.biosemi.com/receiver.htm) to a PC via USB.
 
-
-This enables the computer to send trigger signals to the Biosemi Receiver under the control of software. The following pseudo-code shows how a trigger may be sent to indicate the onset of audio stimuli.
+This enables the PC to send trigger signals to the Biosemi Receiver under the control of software. The following pseudo-code shows how a trigger may be sent to indicate the onset of audio stimuli.
 ```
 send_trigger()
 play_audio()
 ```
 These two operations will not occur at the same time, the trigger will precede the audio onset. The interval between the two events is dependent on hardware performance, implementation language, audio device driver latency, and instantaneous operating system state. The first three of these factors contribute to a constant latency, and the last to a latency variation.
 
-![biosemiTrigPtb.jpg](assets/biosemiTrig.jpg)
+![eegTiming.jpg](assets/eegTiming.jpg)
 
 *Figure 1 – Trigger to audio latency variation measurement*
 
@@ -46,7 +45,7 @@ Stereo or multi-channel audio is prepared containing a simple trigger signal in 
 *Figure 4 – Simple marker trigger using sinusoid cycle*
 
 ### Audio Direct
-Audio stimuli or responses may be routed directly to the trigger interface for generation of a correlated trigger sequence. This approach is particularly effective for periodic stimuli, such as that used to elicit auditory brainstem responses, since accurate timing may be trivially inferred from the trigger sequence. It is sometimes also possible to infer accurate timing for more complex signals, by cross-correlation.
+Audio stimuli or responses may be routed directly to the trigger interface for generation of a correlated trigger sequence. This approach is particularly effective for periodic stimuli, such as that used to evoke auditory brainstem responses, since accurate timing may be trivially inferred from the trigger sequence. It is sometimes also possible to infer accurate timing for more complex signals, by cross-correlation.
 
 ![audioTrig.png](assets/audioTrig.png)
 
