@@ -16,7 +16,7 @@ python ema-stim.py source.mov stimulus.mp4 --blanking 0.1 --characters R2D2 --fi
 ```
 Note that the fixation image dimensions must match that of the source video.
 
-The linear timecode track is encoded as specified in SMPTE ST 12-1:2014. The time address 00:00:00.00 is coincident with the first frame of the video segment and increments at frame rate. Binary group data is constant for each frame and contains the four-character identifier passed to the tool with `--characters`.
+The linear timecode track is encoded as specified in [SMPTE ST 12-1:2014](https://pub.smpte.org/doc/st12-1/20140220-pub/). The time address 00:00:00.00 is coincident with the first frame of the video segment and increments at frame rate. Binary group data is constant for each frame and contains the four-character identifier passed to the tool with `--characters`.
 
 ## ema-time
 [ema-time.py](ema-time.py) decodes two linear timecode tracks from a stereo WAV file and reports their relative timing. Stimulus timecode must be in the left channel and EMA timecode in the right. The stimulus identifier is reported for each presentation detected in the recording, along with the onset and offset time addresses, sample indices, and corresponding EMA frame numbers.
@@ -26,6 +26,8 @@ The tool will report usage help if invoked with the `--help` option. By way of e
 python ema-time.py timecode.wav --framerate 30
 ```
 Note that the Vox-EMA frame rate is ostensibly 800 Hz and its timecode rate 25 Hz. The EMA frame count therefore increments by 32 for each timecode frame. EMA frame numbers reported by the tool are interpolated to the closest even frame corresponding to a given stimulus time address. This provides timing resolution equivalent to one sample period at the maximum Vox-EMA sampling rate of 400 Hz.
+
+For the curious: The time address in Vox-EMA timecode was found to have a random phase relationship with the EMA frame number, and is therefore of no utility here. However, the EMA frame number was discovered to be encoded in the binary group data. This tool therefore makes use of time address data from stimulus timecode and binary group data from EMA timecode for timing analysis.
 
 ## ema-trans
 [ema-trans.py](ema-trans.py) performs rigid body registration and, optionally, bite plane transformation on Vox-EMA kinematic data.
