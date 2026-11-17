@@ -76,19 +76,25 @@ pip install scipy matplotlib
 ```
 
 ## Auditory Brainstem Response stimuli generation
-[abrstim.py](abrstim.py) is an analytic sawtooth waveform synthesiser which may be used to generate stimulus to evoke an auditory brainstem response. The tool generates a WAV file in which the amplitude, fundamental frequency, polarity, number of harmonics, number of repetitions, and sampling rate may be set. By default, these are -12.0 dBFS, 128.0 Hz, positive, 32, 128, and 48000 Hz respectively. The onset and offset of the signal are half-cosine windowed over a single period of the fundamental frequency. Note that the fundamental frequency must be a factor of the audio sampling rate, it should also be a factor of the EEG sampling rate for synchronous analysis.
+[abrstim.py](abrstim.py) is an analytic click waveform synthesiser which generates stimulus to evoke an auditory brainstem response. The tool generates a WAV file in which the amplitude, bandwidth, dispersion, repetition frequency, number of repetitions, and sampling rate may be set. By default, these are -36.0 dBFS, 8000.0 Hz, off, 8.0 Hz, 8, and 48000 Hz respectively. When dispersion is enabled the components of the output signal are time shifted to produce a chirp, which compensates for cochlear travelling wave delay. Note that the fundamental frequency must be a factor of the audio sampling rate, it should also be a factor of the EEG sampling rate for synchronous analysis.
+
+The tool will report usage help if invoked with the `--help` option. By way of example:
+
+To generate default stimuli with or without dispersion and number of repetitions 1000 run:
+```
+python abrstim.py --repetitions 1000 --disperse
+python abrstim.py --repetitions 1000
+```
+This will generate the files `abrstim-chr.wav` and `abrstim-clk.wav`, each with duration 1000 / 8.0 Hz = 125.0 seconds.
+
+## Frequency Following Response stimuli generation
+[ffrstim.py](ffrstim.py) is an analytic sawtooth waveform synthesiser which generates stimulus to evoke a frequency following response. The tool generates a WAV file in which the amplitude, fundamental frequency, polarity, number of harmonics, number of repetitions, and sampling rate may be set. By default, these are -12.0 dBFS, 128.0 Hz, positive, 32, 128, and 48000 Hz respectively. The onset and offset of the signal are half-cosine windowed over a single period of the fundamental frequency. Note that the fundamental frequency must be a factor of the audio sampling rate, it should also be a factor of the EEG sampling rate for synchronous analysis.
 
 The tool will report usage help if invoked with the `--help` option. By way of example:
 
 To generate default stimuli with positive and negative polarities and number of repetitions 2000 run:
 ```
-python abrstim.py --repetitions 2000
-python abrstim.py --repetitions 2000 --invert
+python ffrstim.py --repetitions 2000
+python ffrstim.py --repetitions 2000 --invert
 ```
-This will generate the files `abrstim-pos.wav` and `abrstim-neg.wav`, each with duration 2000 / 128.0 Hz = 15.625 seconds.
-
-### Additional dependencies
-`soundfile` is required.
-```
-pip install soundfile
-```
+This will generate the files `ffrstim-pos.wav` and `ffrstim-neg.wav`, each with duration 2000 / 128.0 Hz = 15.625 seconds.
